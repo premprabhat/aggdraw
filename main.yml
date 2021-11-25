@@ -1,0 +1,38 @@
+name: CI
+
+on: push
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python-version: [2.7, 3.7]
+        
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set global variables
+        run: |
+          echo "NUMPY_VERSION=stable" >> $GITHUB_ENV;
+          echo "MAIN_CMD='python setup.py'" >> $GITHUB_ENV;
+          echo "CONDA_DEPENDENCIES='sphinx pillow coveralls coverage pytest'" >> $GITHUB_ENV;
+          echo "SETUP_XVFB=False" >> $GITHUB_ENV;
+          echo "EVENT_TYPE=push pull_request" >> $GITHUB_ENV;
+          echo "SETUP_CMD=test" >> $GITHUB_ENV;
+          echo "CONDA_CHANNELS=conda-forge" >> $GITHUB_ENV;
+          echo "CONDA_CHANNEL_PRIORITY=True" >> $GITHUB_ENV;
+          echo "TWINE_USERNAME=dhoese" >> $GITHUB_ENV;
+          echo "BUILDMODE=ASTROPY" >> $GITHUB_ENV;
+          echo "CIBW_TEST_COMMAND=python {project}/selftest.py" >> $GITHUB_ENV;
+          echo "CIBW_BEFORE_BUILD_LINUX=yum install -y freetype-devel" >> $GITHUB_ENV;
+          echo "CIBW_SKIP=cp34-* cp35-* cp39-* pp27-* pp36-*" >> $GITHUB_ENV;
+          echo "CIBW_TEST_REQUIRES=numpy pillow pytest" >> $GITHUB_ENV;
+
+      - name: Run install script
+        run: source ci/travis-install.sh
+
+      - name: Run a build script
+        run: ci/travis-build.sh
