@@ -14,6 +14,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Set up QEMU
+        id: qemu
+        uses: docker/setup-qemu-action@v1
+
       - name: Set global variables
         run: |
           echo "NUMPY_VERSION=stable" >> $GITHUB_ENV;
