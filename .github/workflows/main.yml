@@ -33,7 +33,7 @@ jobs:
           echo "CIBW_TEST_COMMAND=python {project}/selftest.py" >> $GITHUB_ENV;
           echo "CIBW_BEFORE_BUILD_LINUX=yum install -y freetype-devel" >> $GITHUB_ENV;
           echo "CIBW_BEFORE_TEST=yum update && yum install -y libjpeg-devel" >> $GITHUB_ENV;
-          echo "CIBW_SKIP=cp34-* cp35-* cp39-* pp27-* pp36-* pp37-*" >> $GITHUB_ENV;
+          echo "CIBW_SKIP=cp34-* cp35-* cp39-* pp27-* pp36-* pp37-* cp36*" >> $GITHUB_ENV;
           echo "CIBW_TEST_REQUIRES=numpy pillow pytest" >> $GITHUB_ENV;
           echo "CIBW_ARCHS_LINUX=aarch64" >> $GITHUB_ENV;
 
