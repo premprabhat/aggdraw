@@ -62,10 +62,10 @@ jobs:
         if: ${{ matrix.BUILDMODE == 'CIBUILDWHEEL' }}
         run: source ci/travis-install.sh
 
-      - name: Run a build script
-        if: ${{ matrix.BUILDMODE == 'ASTROPY' }}
-        shell: bash -l {0}
-        run: python selftest.py
+      #- name: Run a build script
+      #  if: ${{ matrix.BUILDMODE == 'ASTROPY' }}
+      #  shell: bash -l {0}
+      #  run: python selftest.py
 
       - name: Run a build script
         if: ${{ matrix.BUILDMODE == 'ASTROPY' }}
