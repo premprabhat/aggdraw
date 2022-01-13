@@ -29,7 +29,6 @@ jobs:
           miniforge-version: latest
           use-mamba: true
           python-version: ${{ matrix.python-version }}
-          environment-file: continuous_integration/environment.yaml
           activate-environment: test-environment
 
       - name: Set BUILDMODE
@@ -59,6 +58,7 @@ jobs:
           echo "CIBW_ARCHS_LINUX=auto aarch64" >> $GITHUB_ENV;
 
       - name: Run install script
+        if: ${{ matrix.BUILDMODE == 'CIBUILDWHEEL' }}
         run: source ci/travis-install.sh
 
       - name: Run a build script
