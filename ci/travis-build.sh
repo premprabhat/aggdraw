@@ -4,6 +4,7 @@ set -ex
 
 if [ "${BUILDMODE}" = "ASTROPY" ]; then
     conda init bash
+    conda activate test-environment
     pip install -e .
     python selftest.py
 
