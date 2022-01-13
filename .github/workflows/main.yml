@@ -29,6 +29,7 @@ jobs:
           miniforge-version: latest
           use-mamba: true
           python-version: ${{ matrix.python-version }}
+          environment-file: environment.yaml
           activate-environment: test-environment
 
       - name: Set BUILDMODE
@@ -62,4 +63,5 @@ jobs:
         run: source ci/travis-install.sh
 
       - name: Run a build script
+        if: ${{ matrix.BUILDMODE == 'ASTROPY' }}
         run: ci/travis-build.sh
