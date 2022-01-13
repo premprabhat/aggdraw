@@ -40,6 +40,9 @@ jobs:
             echo "BUILDMODE=ASTROPY" >> $GITHUB_ENV;
           fi
 
+      - name: Install cibuildwheel
+        run: python -m pip install cibuildwheel
+
       - name: Set global variables
         run: |
           echo "NUMPY_VERSION=stable" >> $GITHUB_ENV;
@@ -57,10 +60,6 @@ jobs:
           echo "CIBW_SKIP=cp34-* cp35-* pp27-* pp36-* pp37-* pp38-* *-musllinux_*" >> $GITHUB_ENV;
           echo "CIBW_TEST_REQUIRES=numpy pillow pytest" >> $GITHUB_ENV;
           echo "CIBW_ARCHS_LINUX=auto aarch64" >> $GITHUB_ENV;
-
-      - name: Run install script
-        if: ${{ matrix.BUILDMODE == 'CIBUILDWHEEL' }}
-        run: source ci/travis-install.sh
 
       - name: Run tests
         if: ${{ matrix.BUILDMODE == 'ASTROPY' }}
