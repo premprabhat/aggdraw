@@ -37,15 +37,8 @@ jobs:
 
       - name: Set global variables
         run: |
-          echo "NUMPY_VERSION=stable" >> $GITHUB_ENV;
-          echo "BUILDMODE=CIBUILDWHEEL" >> $GITHUB_ENV;
-          echo "MAIN_CMD='python setup.py'" >> $GITHUB_ENV;
-          echo "EVENT_TYPE=push pull_request" >> $GITHUB_ENV;
-          echo "SETUP_CMD=test" >> $GITHUB_ENV;
-          echo "TWINE_USERNAME=dhoese" >> $GITHUB_ENV;
           echo "CIBW_TEST_COMMAND=python {project}/selftest.py" >> $GITHUB_ENV;
           echo "CIBW_BEFORE_BUILD_LINUX=yum install -y freetype-devel" >> $GITHUB_ENV;
-          #echo "CIBW_BEFORE_TEST=yum update && yum install -y libjpeg-devel" >> $GITHUB_ENV;
           echo "CIBW_SKIP=pp* *-musllinux*" >> $GITHUB_ENV;
           echo "CIBW_TEST_REQUIRES=numpy pillow pytest" >> $GITHUB_ENV;
           echo "CIBW_ARCHS_LINUX=auto aarch64" >> $GITHUB_ENV;
