@@ -70,5 +70,5 @@ jobs:
           python selftest.py
 
       - name: Run a build script
-        if: ${{ matrix.BUILDMODE == 'ASTROPY' }}
+        if: ${{ matrix.BUILDMODE == 'CIBUILDWHEEL' }}
         run: ci/travis-build.sh
