@@ -37,8 +37,7 @@ if [[ "${BUILDMODE}" == "ASTROPY" ]]; then
 elif [[ "${BUILDMODE}" == "CIBUILDWHEEL" ]]; then
   export PIP=pip
   if [[ $(uname) == "Darwin" ]]; then
-    export PIP=pip
+    export PIP=pip2
   fi
-  echo "Should install"
   $PIP install cibuildwheel
 fi
