@@ -14,6 +14,7 @@ elif [ "${BUILDMODE}" = "CIBUILDWHEEL" ]; then
       export PIP=pip2
     fi
 
+    $PIP install cibuildwheel
     cibuildwheel --output-dir wheelhouse
     if [ $(uname) = "Darwin" ]; then
         # Re-do delocate with patched version that actually works for aggdraw
