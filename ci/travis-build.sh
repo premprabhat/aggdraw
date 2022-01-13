@@ -3,6 +3,7 @@
 set -ex
 
 if [ "${BUILDMODE}" = "ASTROPY" ]; then
+    
     pip install -e .
     python selftest.py
 
