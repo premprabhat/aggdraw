@@ -19,6 +19,14 @@ jobs:
         id: qemu
         uses: docker/setup-qemu-action@v1
 
+      - name: Set BUILDMODE
+        run: |
+          if [ "CIBUILDWHEEL" == "${{ matrix.BUILDMODE }}" ]; then
+            echo "BUILDMODE=CIBUILDWHEEL" >> $GITHUB_ENV;
+          else
+            echo "BUILDMODE=ASTROPY" >> $GITHUB_ENV;
+          fi
+
       - name: Set global variables
         run: |
           echo "NUMPY_VERSION=stable" >> $GITHUB_ENV;
