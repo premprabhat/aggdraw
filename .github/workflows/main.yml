@@ -64,4 +64,8 @@ jobs:
 
       - name: Run a build script
         if: ${{ matrix.BUILDMODE == 'ASTROPY' }}
+        run: python selftest.py
+
+      - name: Run a build script
+        if: ${{ matrix.BUILDMODE == 'ASTROPY' }}
         run: ci/travis-build.sh
