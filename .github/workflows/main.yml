@@ -32,32 +32,21 @@ jobs:
           environment-file: environment.yaml
           activate-environment: test-environment
 
-      - name: Set BUILDMODE
-        run: |
-          if [ "CIBUILDWHEEL" == "${{ matrix.BUILDMODE }}" ]; then
-            echo "BUILDMODE=CIBUILDWHEEL" >> $GITHUB_ENV;
-          else
-            echo "BUILDMODE=ASTROPY" >> $GITHUB_ENV;
-          fi
-
       - name: Install cibuildwheel
         run: python -m pip install cibuildwheel
 
       - name: Set global variables
         run: |
           echo "NUMPY_VERSION=stable" >> $GITHUB_ENV;
+          echo "BUILDMODE=CIBUILDWHEEL" >> $GITHUB_ENV;
           echo "MAIN_CMD='python setup.py'" >> $GITHUB_ENV;
-          echo "CONDA_DEPENDENCIES='sphinx pillow coveralls coverage pytest'" >> $GITHUB_ENV;
-          echo "SETUP_XVFB=False" >> $GITHUB_ENV;
           echo "EVENT_TYPE=push pull_request" >> $GITHUB_ENV;
           echo "SETUP_CMD=test" >> $GITHUB_ENV;
-          echo "CONDA_CHANNELS=conda-forge" >> $GITHUB_ENV;
-          echo "CONDA_CHANNEL_PRIORITY=True" >> $GITHUB_ENV;
           echo "TWINE_USERNAME=dhoese" >> $GITHUB_ENV;
           echo "CIBW_TEST_COMMAND=python {project}/selftest.py" >> $GITHUB_ENV;
           echo "CIBW_BEFORE_BUILD_LINUX=yum install -y freetype-devel" >> $GITHUB_ENV;
           #echo "CIBW_BEFORE_TEST=yum update && yum install -y libjpeg-devel" >> $GITHUB_ENV;
-          echo "CIBW_SKIP=cp34-* cp35-* pp27-* pp36-* pp37-* pp38-* *-musllinux_*" >> $GITHUB_ENV;
+          echo "CIBW_SKIP=pp* *-musllinux*" >> $GITHUB_ENV;
           echo "CIBW_TEST_REQUIRES=numpy pillow pytest" >> $GITHUB_ENV;
           echo "CIBW_ARCHS_LINUX=auto aarch64" >> $GITHUB_ENV;
 
