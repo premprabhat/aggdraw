@@ -9,13 +9,13 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-        python-version: [3.6]
+        BUILDMODE: [CIBUILDWHEEL, ASTROPY]
         
     steps:
       - uses: actions/checkout@v2
 
       - name: Set up QEMU
-        if: ${{ matrix.os }} == 'ubuntu-latest'
+        if: ${{ matrix.os == 'ubuntu-latest' }}
         id: qemu
         uses: docker/setup-qemu-action@v1
 
@@ -30,7 +30,6 @@ jobs:
           echo "CONDA_CHANNELS=conda-forge" >> $GITHUB_ENV;
           echo "CONDA_CHANNEL_PRIORITY=True" >> $GITHUB_ENV;
           echo "TWINE_USERNAME=dhoese" >> $GITHUB_ENV;
-          echo "BUILDMODE=CIBUILDWHEEL" >> $GITHUB_ENV;
           echo "CIBW_TEST_COMMAND=python {project}/selftest.py" >> $GITHUB_ENV;
           echo "CIBW_BEFORE_BUILD_LINUX=yum install -y freetype-devel" >> $GITHUB_ENV;
           #echo "CIBW_BEFORE_TEST=yum update && yum install -y libjpeg-devel" >> $GITHUB_ENV;
