@@ -7,7 +7,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
         BUILDMODE: [CIBUILDWHEEL, ASTROPY]
         
     steps:
@@ -30,18 +30,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
           environment-file: environment.yaml
           activate-environment: test-environment
-
-      - name: Install cibuildwheel
-        run: python -m pip install cibuildwheel
-
-      - name: Set global variables
-        run: |
-          echo "CIBW_TEST_COMMAND=python {project}/selftest.py" >> $GITHUB_ENV;
-          echo "CIBW_BEFORE_BUILD_LINUX=yum install -y freetype-devel" >> $GITHUB_ENV;
-          echo "CIBW_SKIP=pp* *-musllinux*" >> $GITHUB_ENV;
-          echo "CIBW_TEST_REQUIRES=numpy pillow pytest" >> $GITHUB_ENV;
-          echo "CIBW_ARCHS_LINUX=auto aarch64" >> $GITHUB_ENV;
-
+          
       - name: Run tests
         if: ${{ matrix.BUILDMODE == 'ASTROPY' }}
         shell: bash -l {0}
@@ -49,6 +38,15 @@ jobs:
           pip install -e .
           python selftest.py
 
-      - name: Run a build script
+      - name: Build wheel
         if: ${{ matrix.BUILDMODE == 'CIBUILDWHEEL' }}
-        run: ci/travis-build.sh
+        env:
+          CIBW_TEST_COMMAND: python {project}/selftest.py
+          CIBW_BEFORE_BUILD_LINUX: yum install -y freetype-devel
+          CIBW_SKIP: pp* *-musllinux*
+          CIBW_TEST_REQUIRES: numpy pillow pytest
+          CIBW_ARCHS_LINUX: auto aarch64
+        run: |
+          python -m pip install cibuildwheel
+          #ci/travis-build.sh
+          cibuildwheel --output-dir wheelhouse
