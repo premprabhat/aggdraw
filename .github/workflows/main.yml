@@ -50,9 +50,7 @@ jobs:
           python -m pip install cibuildwheel
           #ci/travis-build.sh
           cibuildwheel --output-dir wheelhouse
-      - name: check wheel
-        if: ${{ matrix.BUILDMODE == 'CIBUILDWHEEL' }}
-        run: ls -l wheelhouse/*
+
   publish:
     #if: startsWith(github.ref, 'refs/tags')
     runs-on: ubuntu-latest
@@ -63,10 +61,10 @@ jobs:
       
       - uses: actions/setup-python@v2
       
-      - name: sdist 
-        run: python setup.py sdist
+      #- name: sdist 
+      #  run: python setup.py sdist
 
-      - run: ls -l dist/*
+      #- run: ls -l dist/*
 
       - run: find . -name "*.whl"
 
