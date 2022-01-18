@@ -74,12 +74,7 @@ jobs:
       - name: download
         uses: actions/download-artifact@v2
 
-      - run: find . -name "*.whl"
-
-      - run: ls -l wheelhouse/*
-
       - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@master
-        with:
-          user: ${{ secrets.PYPI_USERNAME }}
-          password: ${{ secrets.PYPI_PASSWORD }}
+        run: |
+          #python -m pip install twine
+          python -m twine upload --skip-existing wheelhouse/*.whl
